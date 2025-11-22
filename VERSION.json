@@ -1,6 +1,6 @@
 {
   "description": "Releases",
-  "flood_version": "0.0.1-test",
+  "flood_version": "0.0.4",
   "latest": true,
   "rtorrent_version": "0.15.7",
   "test_amd64": true,
