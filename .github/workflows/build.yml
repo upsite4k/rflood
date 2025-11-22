@@ -3,8 +3,8 @@ name: Build and push rflood image
 on:
   push:
     tags:
-      - 'v*'        # build when you push a tag like v0.16.3-4.11.0
-  workflow_dispatch: # allow manual trigger
+      - 'v*'              # tag just triggers the build
+  workflow_dispatch:       # manual run possible
 
 jobs:
   build-and-push:
@@ -15,10 +15,10 @@ jobs:
       packages: write
 
     steps:
-      - name: Checkout
+      - name: Checkout release branch
         uses: actions/checkout@v4
         with:
-          ref: release      # 👈 always build from branch "release"
+          ref: release      # always build from branch "release"
           fetch-depth: 0
 
       - name: Install jq
@@ -65,8 +65,12 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/rflood:latest
           build-args: |
             UPSTREAM_IMAGE=${{ steps.version.outputs.upstream_image }}
+            UPSTREAM_TAG=${{ steps.version.outputs.upstream_tag }}
             UPSTREAM_DIGEST_AMD64=${{ steps.version.outputs.upstream_digest_amd64 }}
             RTORRENT_VERSION=${{ steps.version.outputs.rtorrent_version }}
             FLOOD_VERSION=${{ steps.version.outputs.flood_version }}
-            UPSTREAM_TAG=${{ steps.version.outputs.upstream_tag }}
             IMAGE_STATS=false
+
+          # 🔥 Build cache via GitHub Actions (speeds up subsequent builds)
+          cache-from: type=gha,scope=rflood-amd64
+          cache-to: type=gha,mode=max,scope=rflood-amd64
