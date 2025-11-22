@@ -17,6 +17,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: release      # 👈 always build from branch "release"
+          fetch-depth: 0
 
       - name: Install jq
         run: |
