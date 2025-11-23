@@ -2,7 +2,7 @@
 set -euo pipefail
 
 KODI_HOST="${KODI_HOST:?KODI_HOST not set}"
-KODI_PORT="${KODI_HOST:?KODI_HOST not set}"
+KODI_PORT="${KODI_PORT:?KODI_PORT not set}"
 KODI_USER="${KODI_USER:?KODI_USER not set}"
 KODI_PASSWORD="${KODI_PASSWORD:?KODI_PASSWORD not set}"
 
