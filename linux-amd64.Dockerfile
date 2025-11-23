@@ -50,3 +50,4 @@ COPY root/ /
 
 # make sure script is executable (path matches what we’ll use from Flood)
 RUN chmod +x /app/transfer-torrent.sh
+RUN chmod +x /app/update-kodi.sh
