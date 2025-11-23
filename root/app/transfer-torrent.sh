@@ -31,13 +31,10 @@ case "$CATEGORY" in
     ;;
 esac
 
-NAME="$(basename "$TORRENT_PATH")"
+NAME="$(echo "$TORRENT_PATH" | sed 's#^/data/##')"  
 TARGET="${TARGET_BASE%/}/$NAME"
 
-echo "Transferring:"
-echo "  from: $TORRENT_PATH"
-echo "  to:   $RSYNC_USER@$RSYNC_HOST:$TARGET"
-echo
+echo "Transferring from: $TORRENT_PATH to: $RSYNC_USER@$RSYNC_HOST:$TARGET" >> /config/debug.log
 
 rsync \
   -avh --progress \
@@ -45,4 +42,4 @@ rsync \
   "$TORRENT_PATH"/ \
   "$RSYNC_USER@$RSYNC_HOST:$TARGET"/
 
-echo "Done."
+echo "Done." >> /config/debug.log
