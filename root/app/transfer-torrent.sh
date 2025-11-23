@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+exec 2>>/config/debug.log
 TORRENT_PATH="${1:-}"
 CATEGORY="${2:-}"
 
@@ -34,12 +35,12 @@ esac
 NAME="$(echo "$TORRENT_PATH" | sed 's#^/data/##')"  
 TARGET="${TARGET_BASE%/}/$NAME"
 
-echo "Transferring from: $TORRENT_PATH to: $RSYNC_USER@$RSYNC_HOST:$TARGET" >> /config/debug.log
+echo "Transferring from: $TORRENT_PATH to: $RSYNC_USER@$RSYNC_HOST:$TARGET_BASE" >> /config/debug.log
 
 rsync \
   -avh --progress \
   -e "ssh -i $SSH_KEY -p $RSYNC_SSH_PORT -o StrictHostKeyChecking=accept-new" \
-  "$TORRENT_PATH"/ \
-  "$RSYNC_USER@$RSYNC_HOST:$TARGET"/
+  "$TORRENT_PATH" \
+  "$RSYNC_USER@$RSYNC_HOST:$TARGET_BASE/" >> /config/debug.log
 
 echo "Done." >> /config/debug.log
