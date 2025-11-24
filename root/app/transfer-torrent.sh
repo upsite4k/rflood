@@ -34,7 +34,7 @@ esac
 
 NAME="$(echo "$TORRENT_PATH" | sed 's#^/data/##')"  
 TARGET="${TARGET_BASE%/}/$NAME"
-
+chmod -R 777 $TORRENT_PATH
 echo "Transferring from: $TORRENT_PATH to: $RSYNC_USER@$RSYNC_HOST:$TARGET_BASE" >> /config/debug.log
 
 rsync \
