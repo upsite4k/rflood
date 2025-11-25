@@ -38,7 +38,7 @@ chmod -R 777 $TORRENT_PATH
 echo "Transferring from: $TORRENT_PATH to: $RSYNC_USER@$RSYNC_HOST:$TARGET_BASE" >> /config/debug.log
 
 rsync \
-  -avh --progress \
+  -avch --progress \
   -e "ssh -i $SSH_KEY -p $RSYNC_SSH_PORT -o StrictHostKeyChecking=accept-new" \
   "$TORRENT_PATH" \
   "$RSYNC_USER@$RSYNC_HOST:$TARGET_BASE/" >> /config/debug.log
